@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 580" width="400" height="580" style="background:#ffffff; border-radius: 16px; font-family: sans-serif;">
+  <!-- Card Background & Drop Shadow -->
+  <rect width="400" height="580" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Header QRIS Banner -->
+  <rect x="0" y="0" width="400" height="90" rx="20" fill="#dc2626"/>
+  <rect x="0" y="70" width="400" height="20" fill="#dc2626"/>
+  
+  <!-- QRIS Text Logo -->
+  <text x="200" y="52" fill="#ffffff" font-size="34" font-weight="900" text-anchor="middle" letter-spacing="3">QRIS</text>
+  <text x="200" y="72" fill="#fecaca" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="1">STANDAR PEMBAYARAN DIGITAL NASIONAL</text>
+
+  <!-- Merchant Info -->
+  <rect x="24" y="105" width="352" height="65" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="200" y="132" fill="#1e293b" font-size="16" font-weight="800" text-anchor="middle" letter-spacing="0.5">CAFETARIA IDN SENOPATI</text>
+  <text x="200" y="152" fill="#64748b" font-size="11" font-weight="500" text-anchor="middle">NMID : ID1026094821039 • KOTA ADM. JAKARTA SELATAN</text>
+
+  <!-- QR Code Container Box -->
+  <rect x="35" y="185" width="330" height="330" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  
+  <!-- Corner Position Finder 1 (Top-Left) -->
+  <rect x="65" y="215" width="60" height="60" rx="8" fill="#1e293b"/>
+  <rect x="75" y="225" width="40" height="40" rx="4" fill="#ffffff"/>
+  <rect x="85" y="235" width="20" height="20" rx="2" fill="#845000"/>
+
+  <!-- Corner Position Finder 2 (Top-Right) -->
+  <rect x="275" y="215" width="60" height="60" rx="8" fill="#1e293b"/>
+  <rect x="285" y="225" width="40" height="40" rx="4" fill="#ffffff"/>
+  <rect x="295" y="235" width="20" height="20" rx="2" fill="#845000"/>
+
+  <!-- Corner Position Finder 3 (Bottom-Left) -->
+  <rect x="65" y="425" width="60" height="60" rx="8" fill="#1e293b"/>
+  <rect x="75" y="435" width="40" height="40" rx="4" fill="#ffffff"/>
+  <rect x="85" y="445" width="20" height="20" rx="2" fill="#845000"/>
+
+  <!-- QR Code Realistic Matrix Dots -->
+  <!-- Row 1 -->
+  <rect x="145" y="215" width="12" height="12" fill="#1e293b"/>
+  <rect x="165" y="215" width="12" height="12" fill="#1e293b"/>
+  <rect x="195" y="215" width="12" height="12" fill="#1e293b"/>
+  <rect x="225" y="215" width="24" height="12" fill="#1e293b"/>
+  <!-- Row 2 -->
+  <rect x="135" y="235" width="18" height="12" fill="#1e293b"/>
+  <rect x="175" y="235" width="30" height="12" fill="#1e293b"/>
+  <rect x="235" y="235" width="12" height="12" fill="#1e293b"/>
+  <!-- Row 3 -->
+  <rect x="145" y="255" width="24" height="12" fill="#1e293b"/>
+  <rect x="195" y="255" width="12" height="12" fill="#1e293b"/>
+  <rect x="215" y="255" width="30" height="12" fill="#1e293b"/>
+  <!-- Middle Area -->
+  <rect x="65" y="295" width="35" height="12" fill="#1e293b"/>
+  <rect x="115" y="295" width="20" height="12" fill="#1e293b"/>
+  <rect x="145" y="295" width="25" height="12" fill="#1e293b"/>
+  <rect x="235" y="295" width="20" height="12" fill="#1e293b"/>
+  <rect x="275" y="295" width="40" height="12" fill="#1e293b"/>
+
+  <rect x="75" y="315" width="15" height="12" fill="#1e293b"/>
+  <rect x="105" y="315" width="40" height="12" fill="#1e293b"/>
+  <rect x="255" y="315" width="30" height="12" fill="#1e293b"/>
+  <rect x="305" y="315" width="25" height="12" fill="#1e293b"/>
+
+  <!-- Center Coffee Brand Badge -->
+  <circle cx="200" cy="350" r="32" fill="#845000" stroke="#ffffff" stroke-width="4"/>
+  <path d="M190 342 h16 a5 5 0 0 1 5 5 v8 a7 7 0 0 1 -7 7 h-12 a7 7 0 0 1 -7 -7 v-8 a5 5 0 0 1 5 -5 z" fill="#ffffff"/>
+  <path d="M211 346 h4 a3 3 0 0 1 3 3 v2 a3 3 0 0 1 -3 3 h-4" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <path d="M187 364 h26" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Lower Middle Matrix -->
+  <rect x="75" y="345" width="25" height="12" fill="#1e293b"/>
+  <rect x="125" y="345" width="25" height="12" fill="#1e293b"/>
+  <rect x="250" y="345" width="35" height="12" fill="#1e293b"/>
+  <rect x="305" y="345" width="25" height="12" fill="#1e293b"/>
+
+  <rect x="65" y="375" width="40" height="12" fill="#1e293b"/>
+  <rect x="120" y="375" width="30" height="12" fill="#1e293b"/>
+  <rect x="165" y="375" width="20" height="12" fill="#1e293b"/>
+  <rect x="220" y="375" width="20" height="12" fill="#1e293b"/>
+  <rect x="255" y="375" width="40" height="12" fill="#1e293b"/>
+  <rect x="315" y="375" width="20" height="12" fill="#1e293b"/>
+
+  <rect x="75" y="395" width="20" height="12" fill="#1e293b"/>
+  <rect x="110" y="395" width="35" height="12" fill="#1e293b"/>
+  <rect x="160" y="395" width="40" height="12" fill="#1e293b"/>
+  <rect x="215" y="395" width="30" height="12" fill="#1e293b"/>
+  <rect x="260" y="395" width="20" height="12" fill="#1e293b"/>
+  <rect x="300" y="395" width="35" height="12" fill="#1e293b"/>
+
+  <!-- Bottom-Right Matrix -->
+  <rect x="145" y="425" width="40" height="12" fill="#1e293b"/>
+  <rect x="200" y="425" width="25" height="12" fill="#1e293b"/>
+  <rect x="240" y="425" width="40" height="12" fill="#1e293b"/>
+  <rect x="295" y="425" width="35" height="12" fill="#1e293b"/>
+
+  <rect x="135" y="445" width="25" height="12" fill="#1e293b"/>
+  <rect x="175" y="445" width="45" height="12" fill="#1e293b"/>
+  <rect x="235" y="445" width="30" height="12" fill="#1e293b"/>
+  <rect x="280" y="445" width="55" height="12" fill="#1e293b"/>
+
+  <rect x="145" y="465" width="30" height="12" fill="#1e293b"/>
+  <rect x="190" y="465" width="35" height="12" fill="#1e293b"/>
+  <rect x="240" y="465" width="25" height="12" fill="#1e293b"/>
+  <rect x="280" y="465" width="45" height="12" fill="#1e293b"/>
+
+  <!-- Footer Info & GPN Badge -->
+  <text x="50" y="542" fill="#64748b" font-size="11" font-weight="600">Terima Pembayaran dari:</text>
+  <text x="50" y="558" fill="#94a3b8" font-size="9">BCA, Mandiri, BRI, BNI, GoPay, OVO, ShopeePay, DANA</text>
+  
+  <rect x="305" y="528" width="55" height="28" rx="6" fill="#1e293b"/>
+  <text x="332" y="547" fill="#ffffff" font-size="12" font-weight="900" text-anchor="middle" letter-spacing="1">GPN</text>
+</svg>

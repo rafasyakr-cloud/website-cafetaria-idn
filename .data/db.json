@@ -1,0 +1,103 @@
+{
+  "Roles": [
+    {
+      "id": "role-admin",
+      "name": "admin",
+      "description": "Administrator sistem dengan akses penuh ke seluruh manajemen dan dashboard",
+      "permissions": [
+        "*"
+      ],
+      "is_system": true,
+      "created_at": "2026-11-10T02:26:57.019Z"
+    },
+    {
+      "id": "role-user",
+      "name": "user",
+      "description": "Pengguna terdaftar standar yang dapat melihat pesanan dan berinteraksi",
+      "permissions": [
+        "read:news",
+        "create:order",
+        "read:order"
+      ],
+      "is_system": true,
+      "created_at": "2026-11-10T02:26:57.019Z"
+    }
+  ],
+  "Users": [
+    {
+      "id": "user-admin-default",
+      "name": "Administrator Cafetaria IDN",
+      "email": "admin@gmail.com",
+      "password_hash": "$2a$10$HQ5uheMv3PCWj6bExokFm.5edgTQZI5byn9fNxFJhKXpYeMQXqIRO",
+      "role_id": "role-admin",
+      "status": "active",
+      "created_at": "2026-11-10T02:26:57.019Z",
+      "updated_at": "2026-11-10T02:26:57.019Z"
+    },
+    {
+      "name": "Pelanggan Test",
+      "email": "user_1794278357311@test.com",
+      "password_hash": "$2a$10$JqoKby49MH7OBq1lRCzMw.l07UcruyaUM9ynUZ8wgUJPeHAiD56ne",
+      "role_id": "user",
+      "status": "active",
+      "id": "users-1794278357449-teeb1",
+      "created_at": "2026-11-10T02:39:17.449Z",
+      "updated_at": "2026-11-10T02:39:17.449Z"
+    }
+  ],
+  "News": [
+    {
+      "id": "news-1",
+      "title": "Rahasia Menyeduh Pour Over V60 Sempurna di Rumah Menggunakan Biji Gayo",
+      "slug": "rahasia-menyeduh-pour-over-v60-biji-gayo",
+      "excerpt": "Memahami rasio seduhan 1:15, suhu air ideal 92°C, dan teknik pouring bertahap agar nada rasa rempah serta dark chocolate dari biji Gayo terekstrak maksimal.",
+      "content": "Menyeduh kopi dengan metode pour over V60 membutuhkan ketelitian pada suhu air, rasio seduhan, serta ukuran gilingan biji kopi. Biji kopi Aceh Gayo memiliki karakter khas dark chocolate, rempah hangat, dan keasaman manis yang seimbang. Gunakan rasio 1:15 dengan suhu 92 derajat Celsius untuk hasil ekstraksi terbaik.",
+      "thumbnail_path": "/images/article-1.webp",
+      "status": "published",
+      "author_id": "user-admin-default",
+      "created_at": "2026-11-10T02:26:57.019Z",
+      "updated_at": "2026-11-10T02:26:57.019Z"
+    },
+    {
+      "id": "news-2",
+      "title": "Program Kemitraan Adil: Mendukung Masa Depan Petani Kopi di Dataran Kintamani",
+      "slug": "program-kemitraan-adil-petani-kintamani",
+      "excerpt": "Bagaimana skema direct-purchase premium kami memberikan dampak nyata bagi peremajaan kebun, fasilitas pengolahan pascapanen, dan kesejahteraan keluarga petani.",
+      "content": "Melalui skema direct trade premium, Cafetaria IDN bekerja sama langsung dengan kelompok tani di Kintamani, Bali. Kami memastikan harga beli yang adil di atas rata-rata pasar untuk mendukung peremajaan kebun ramah lingkungan serta pendidikan anak-anak petani.",
+      "thumbnail_path": "/images/article-2.webp",
+      "status": "published",
+      "author_id": "user-admin-default",
+      "created_at": "2026-11-10T02:26:57.019Z",
+      "updated_at": "2026-11-10T02:26:57.019Z"
+    },
+    {
+      "id": "news-3",
+      "title": "Koleksi Pastry Segar: Eksplorasi Croissant Pandan & Sourdough Artisan",
+      "slug": "koleksi-pastry-musim-dingin-croissant-pandan",
+      "excerpt": "Perpaduan keahlian lamination Prancis klasik dengan esensi aroma daun pandan Suji asli dan fermentasi lambat ragi liar untuk sarapan yang menghangatkan hati.",
+      "content": "Kami menyajikan pastry artisan yang dipanggang segar setiap pagi tanpa bahan pengawet sintetik. Menghadirkan perpaduan laminasi mentega Prancis dengan sentuhan lokal daun pandan Suji asli Jawa Barat yang wangi dan lembut.",
+      "thumbnail_path": "/images/article-3.webp",
+      "status": "published",
+      "author_id": "user-admin-default",
+      "created_at": "2026-11-10T02:26:57.019Z",
+      "updated_at": "2026-11-10T02:26:57.019Z"
+    }
+  ],
+  "Orders": [
+    {
+      "id": "order-test-1",
+      "order_code": "IDN-20261111-TEST",
+      "user_id": "user-admin-default",
+      "customer_name": "Raffasya Tester",
+      "whatsapp": "081234567890",
+      "order_type": "kombinasi",
+      "items_json": "{\"fnbItems\":[{\"id\":\"m1\",\"name\":\"Es Kopi Susu Aren Gayo\",\"price\":38000,\"quantity\":2}],\"reservationDetails\":{\"zoneName\":\"Private Mezzanine\",\"date\":\"2026-11-12\",\"timeSlot\":\"14:00 - 16:00\",\"guestCount\":4,\"downPayment\":50000}}",
+      "total_amount": 126000,
+      "status": "dikonfirmasi",
+      "payment_proof_path": "",
+      "notes": "Less sweet ya",
+      "created_at": "2026-11-11T01:47:41.644Z",
+      "updated_at": "2026-11-11T01:47:41.647Z"
+    }
+  ]
+}
