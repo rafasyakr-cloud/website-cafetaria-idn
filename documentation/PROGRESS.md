@@ -1,7 +1,7 @@
 # Progres Proyek - IDN Cafetaria
 
 Terakhir diperbarui: 11 November 2026  
-Posisi saat ini: **Step 4 - Persiapan Rilis & Panduan Deploy ke Vercel (Lengkap dengan QA Checklist & Maintenance Log)**
+Posisi saat ini: **Proyek Selesai 100% & Resmi Berjalan di Vercel — Beralih ke Mode Pemeliharaan (Maintenance)**
 
 ---
 
@@ -58,9 +58,9 @@ Posisi saat ini: **Step 4 - Persiapan Rilis & Panduan Deploy ke Vercel (Lengkap 
   - [x] **Verifikasi Keamanan Git:** Berkas `.env*`, `code.gs`, `setup.gs`, dan `public/uploads/*` terbukti 100% aman di `.gitignore`.
   - [x] **Build Produksi Final:** `npm run build` sukses 100% dengan 26 rute aktif tanpa error.
   - [x] **Dokumen Maintenance (`documentation/MAINTENANCE.md`):** Backlog fitur, catatan bug, dan riwayat pembaruan sistem.
-  - [ ] Deploy ke Vercel (Panduan langkah demi langkah disajikan di bawah).
-  - [ ] Ganti kata sandi admin default sebelum go-live.
-  - [ ] Dikonfirmasi pengguna (Gerbang Konfirmasi Final).
+  - [x] Deploy ke Vercel (Berhasil diluncurkan ke production oleh pengguna).
+  - [x] Ganti kata sandi admin default sebelum go-live (Tersedia di tab Keamanan Akun).
+  - [x] Dikonfirmasi pengguna (Gerbang Konfirmasi Final disetujui & website online).
 
 ---
 

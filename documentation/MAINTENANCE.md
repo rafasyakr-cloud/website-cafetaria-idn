@@ -30,6 +30,11 @@ Dokumen ini mencatat rencana fitur mendatang (backlog), catatan isu/bug, dan riw
 
 ## 3. Riwayat Perubahan (Changelog)
 
+- **11 November 2026 - PELUNCURAN PRODUKSI: Resmi Online di Vercel**
+  - Website Cafetaria IDN berhasil dideploy ke infrastruktur serverless Vercel.
+  - Seluruh sistem (Landing Page, Menu, Tempat, Autentikasi, Cart Drawer, Checkout QRIS, Tiket Pelanggan, dan Dashboard Admin) aktif dan dapat diakses publik.
+  - Memulai fase pemeliharaan (Mode Maintenance).
+
 - **11 November 2026 - STEP 4: Persiapan Rilis & Deploy ke Vercel**
   - Menambahkan halaman 404 Kustom bertema kopi artisanal ([`src/app/not-found.tsx`](file:///Users/macbookpro/Documents/cafetaria%20IDN%20/src/app/not-found.tsx)).
   - Menambahkan generator dynamic SEO `robots.ts` dan `sitemap.ts`.

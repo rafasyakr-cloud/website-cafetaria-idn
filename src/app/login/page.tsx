@@ -16,12 +16,6 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleQuickAdmin = () => {
-    setEmail("admin@gmail.com");
-    setPassword("123456");
-    setError(null);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -164,33 +158,15 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* Quick Admin Credential Button for Easy Testing */}
-          <div className="pt-4 border-t border-outline-variant/30 space-y-3">
-            <div className="p-3 bg-secondary-container/40 rounded-xl border border-outline-variant/30 text-center space-y-1">
-              <p className="text-[11px] font-semibold text-on-secondary-container">
-                Akun Admin Bawaan (Step 2 Testing):
-              </p>
-              <p className="text-xs font-mono text-primary font-bold">
-                admin@gmail.com • sandi: 123456
-              </p>
-              <button
-                type="button"
-                onClick={handleQuickAdmin}
-                className="mt-1 text-xs text-primary underline font-semibold hover:text-primary-hover"
-              >
-                Klik untuk Isi Otomatis
-              </button>
-            </div>
-
-            <div className="text-center text-xs text-on-surface-variant">
-              Belum punya akun?{" "}
-              <Link
-                href="/register"
-                className="text-primary font-bold hover:underline"
-              >
-                Daftar Akun Baru
-              </Link>
-            </div>
+          {/* Register Link */}
+          <div className="pt-4 border-t border-outline-variant/30 text-center text-xs text-on-surface-variant">
+            Belum punya akun?{" "}
+            <Link
+              href="/register"
+              className="text-primary font-bold hover:underline"
+            >
+              Daftar Akun Baru
+            </Link>
           </div>
         </div>
 
