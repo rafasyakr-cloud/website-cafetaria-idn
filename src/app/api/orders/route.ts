@@ -1,17 +1,12 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth";
-import { db, OrderRecord } from "@/lib/db";
+import { getCurrentUser, createSessionToken, setSessionCookie } from "@/lib/auth";
+import { db, OrderRecord, UserRecord } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function POST(request: Request) {
   try {
-    const session = await getCurrentUser();
-    if (!session) {
-      return NextResponse.json(
-        { success: false, error: "Silakan masuk ke akun Anda terlebih dahulu untuk melakukan pemesanan." },
-        { status: 401 }
-      );
-    }
-
     const body = await request.json();
     const { customer_name, whatsapp, order_type, items_json, total_amount, notes, payment_proof_path } = body;
 
@@ -36,6 +31,50 @@ export async function POST(request: Request) {
         { success: false, error: "Nominal pembayaran tidak valid." },
         { status: 400 }
       );
+    }
+
+    let session = await getCurrentUser();
+    if (!session) {
+      // Auto-create client user session agar pelanggan tidak terhambat
+      const clientId = `client-${cleanWhatsapp}`;
+      const clientEmail = `${cleanWhatsapp}@klien.cafetariaidn.com`;
+
+      // Check if user already exists
+      const existingUsers = await db.find<UserRecord>("Users", { email: clientEmail });
+      let userId = clientId;
+      if (existingUsers.length > 0) {
+        userId = existingUsers[0].id;
+      } else {
+        try {
+          const newUser = await db.insert<UserRecord>("Users", {
+            id: clientId,
+            name: customer_name.trim(),
+            email: clientEmail,
+            password_hash: "CLIENT_NO_PASSWORD",
+            role_id: "role-user",
+            status: "active",
+          });
+          userId = newUser.id;
+        } catch (e) {
+          // Fallback to clientId
+        }
+      }
+
+      const token = await createSessionToken({
+        id: userId,
+        name: customer_name.trim(),
+        email: clientEmail,
+        role: "user",
+        roleId: "role-user",
+      });
+      await setSessionCookie(token);
+      session = {
+        id: userId,
+        name: customer_name.trim(),
+        email: clientEmail,
+        role: "user",
+        roleId: "role-user",
+      };
     }
 
     // Generate unique readable order code
@@ -69,4 +108,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

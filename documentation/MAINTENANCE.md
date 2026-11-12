@@ -25,10 +25,22 @@ Dokumen ini mencatat rencana fitur mendatang (backlog), catatan isu/bug, dan riw
 - [x] **[11 Nov 2026] Type error 'tag' pada SpaceItem di CartDrawer:**
   - *Deskripsi:* Panggilan `s.tag` diganti menjadi `s.badge` sesuai interface `SpaceItem` di `site.ts`.
   - *Status:* **Telah diperbaiki 100%** dan terverifikasi di build produksi.
+- [x] **[11 Nov 2026] Client-side exception saat membuka tab Manajemen Pemesanan di Dashboard:**
+  - *Deskripsi:* Tipe data WhatsApp dari Google Spreadsheet terbaca sebagai angka (`typeof whatsapp === "number"`), sehingga fungsi `.replace()` dan `.includes()` memicu `TypeError: not a function` yang merusak render komponen di browser.
+  - *Status:* **Telah diperbaiki 100%** dengan helper `safeStr()`, `parseOrderItems()`, dan `safeFormatOrderDate()`.
+- [x] **[11 Nov 2026] Berita baru dari admin tidak muncul di website publik:**
+  - *Deskripsi:* Rute `/api/news` ter-cache statis oleh Next.js/Vercel saat proses build, sehingga artikel baru yang disimpan ke Google Spreadsheet tidak langsung terbaca di halaman depan.
+  - *Status:* **Telah diperbaiki 100%** dengan menyetel `dynamic = "force-dynamic"`, `revalidate = 0`, header `Cache-Control: no-store`, serta parameter timestamp di sisi klien.
 
 ---
 
 ## 3. Riwayat Perubahan (Changelog)
+
+- **11 November 2026 - PEMBARUAN SISTEM: Login Klien Tanpa Password, Live News Sync & Update Kontak WA**
+  - **Nomor Kontak Resmi:** Mengubah seluruh tautan dan nomor WhatsApp bantuan/kasir ke **`087864081772`** (`wa.me/6287864081772`) di `site.ts`, `Contact.tsx`, `pesanan/page.tsx`, `checkout/page.tsx`, dan `dashboard/page.tsx`.
+  - **Login Klien Tanpa Kata Sandi:** Pengunjung kini dapat masuk sebagai akun klien cukup dengan nama dan nomor WhatsApp tanpa perlu membuat atau mengingat kata sandi. Menyediakan opsi masuk cepat (1-klik tamu). Tab terpisah untuk staf Administrator.
+  - **Perbaikan Manajemen Pesanan Dashboard:** Menghapus potensi crash exception pada tab pesanan saat memproses baris Google Spreadsheet.
+  - **Sinkronisasi Berita Live:** Memastikan artikel jurnal/berita yang diterbitkan dari admin langsung tampil secara instan dan responsif di beranda utama website.
 
 - **11 November 2026 - PELUNCURAN PRODUKSI: Resmi Online di Vercel**
   - Website Cafetaria IDN berhasil dideploy ke infrastruktur serverless Vercel.

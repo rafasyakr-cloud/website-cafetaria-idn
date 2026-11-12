@@ -26,7 +26,10 @@ export default function News() {
     let isMounted = true;
     async function fetchLiveNews() {
       try {
-        const res = await fetch("/api/news");
+        const res = await fetch(`/api/news?t=${Date.now()}`, {
+          cache: "no-store",
+          headers: { Pragma: "no-cache", "Cache-Control": "no-cache" },
+        });
         if (!res.ok) return;
         const data = await res.json();
         if (isMounted && data.success && Array.isArray(data.articles) && data.articles.length > 0) {
@@ -109,8 +112,8 @@ export default function News() {
           </Link>
         </div>
 
-        {/* 3 Blog Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Blog Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
             <article
               key={article.id}

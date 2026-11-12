@@ -77,6 +77,21 @@ export default function RegisterPage() {
 
         {/* Card Form */}
         <div className="mt-8 bg-surface-container-lowest py-8 px-6 shadow-warm rounded-2xl border border-outline-variant/50 sm:px-10 space-y-6">
+          <div className="p-4 rounded-xl bg-primary/10 border border-primary/20 text-xs text-on-surface space-y-2">
+            <p className="font-bold text-primary flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm">tips_and_updates</span>
+              <span>Masuk Tanpa Password untuk Klien</span>
+            </p>
+            <p className="text-[11px] text-on-surface-variant leading-relaxed">
+              Pelanggan kini tidak perlu membuat kata sandi baru. Cukup gunakan nama & nomor WhatsApp di halaman masuk klien untuk langsung memesan!
+            </p>
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-1 font-bold text-primary hover:underline text-xs"
+            >
+              <span>Masuk Akun Klien Tanpa Password →</span>
+            </Link>
+          </div>
           {error && (
             <div
               role="alert"

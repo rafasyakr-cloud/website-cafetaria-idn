@@ -112,9 +112,9 @@ export const siteConfig: SiteConfig = {
   contact: {
     branchName: "Gerai Flagship Senopati",
     address: "Jl. Senopati No. 42, Kebayoran Baru, Jakarta Selatan, 12190",
-    phone: "+62 21-555-0199",
-    whatsapp: "+6281234567890",
-    whatsappFormatted: "+62 812-3456-7890",
+    phone: "+62 878-6408-1772",
+    whatsapp: "+6287864081772",
+    whatsappFormatted: "+62 878-6408-1772",
     email: "hello@cafetariaidn.com",
     corporateEmail: "corporate@cafetariaidn.com",
     operatingHours: "Senin – Minggu: 07.00 – 22.00 WIB",

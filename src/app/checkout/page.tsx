@@ -234,7 +234,7 @@ export default function CheckoutPage() {
                         required
                         value={whatsapp}
                         onChange={(e) => setWhatsapp(e.target.value)}
-                        placeholder="Contoh: 081234567890"
+                        placeholder="Contoh: 087864081772"
                         className="w-full px-4 py-3 rounded-xl bg-surface border border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary text-xs sm:text-sm"
                       />
                       <span className="text-[11px] text-outline block">

@@ -161,23 +161,30 @@ export default function PesananPage() {
               {orders.map((order) => {
                 const badge = getStatusBadge(order.status);
                 let parsedItems: any = {};
-                try {
-                  parsedItems = JSON.parse(order.items_json);
-                } catch (e) {
-                  parsedItems = {};
+                if (typeof order.items_json === "object" && order.items_json !== null) {
+                  parsedItems = order.items_json;
+                } else {
+                  try {
+                    parsedItems = JSON.parse(order.items_json || "{}");
+                  } catch (e) {
+                    parsedItems = {};
+                  }
                 }
 
-                const fnbList = Array.isArray(parsedItems.fnbItems) ? parsedItems.fnbItems : [];
-                const resDetail = parsedItems.reservationDetails;
+                const fnbList = Array.isArray(parsedItems?.fnbItems) ? parsedItems.fnbItems : [];
+                const resDetail = parsedItems?.reservationDetails;
 
-                const dateFormatted = new Date(order.created_at).toLocaleDateString("id-ID", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                });
+                const orderDate = new Date(order.created_at);
+                const dateFormatted = !isNaN(orderDate.getTime())
+                  ? orderDate.toLocaleDateString("id-ID", {
+                      weekday: "long",
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                  : String(order.created_at || "Baru saja");
 
                 return (
                   <article
@@ -362,7 +369,7 @@ export default function PesananPage() {
               </p>
             </div>
             <a
-              href="https://wa.me/6281298765432?text=Halo%20Cafetaria%20IDN,%20saya%20ingin%20menanyakan%20status%20pesanan%20saya"
+              href="https://wa.me/6287864081772?text=Halo%20Cafetaria%20IDN,%20saya%20ingin%20menanyakan%20status%20pesanan%20saya"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold shadow-sm transition-transform active:scale-95 whitespace-nowrap self-start sm:self-auto"

@@ -344,24 +344,64 @@ export default function DashboardPage() {
     }
   };
 
-  const getWhatsAppLink = (order: any) => {
-    const cleanPhone = (order.whatsapp || "").replace(/[^0-9]/g, "");
-    const formattedPhone = cleanPhone.startsWith("0") ? `62${cleanPhone.slice(1)}` : cleanPhone;
-    const text = encodeURIComponent(
-      `Halo Kak ${order.customer_name}, kami dari tim Cafetaria IDN Senopati mengenai pesanan Anda #${order.order_code}.`
-    );
-    return `https://wa.me/${formattedPhone}?text=${text}`;
+  const safeStr = (v: any): string => (v === null || v === undefined ? "" : String(v));
+
+  const safeFormatOrderDate = (raw: any): string => {
+    if (!raw) return "Baru saja";
+    const d = new Date(raw);
+    if (isNaN(d.getTime())) return safeStr(raw);
+    return d.toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
-  const pendingOrdersCount = orders.filter((o) => o.status === "menunggu_konfirmasi").length;
+  const parseOrderItems = (raw: any) => {
+    if (!raw) return { fnbItems: [], reservationDetails: null };
+    if (typeof raw === "object") {
+      return {
+        fnbItems: Array.isArray(raw.fnbItems) ? raw.fnbItems : [],
+        reservationDetails: raw.reservationDetails || null,
+      };
+    }
+    try {
+      const parsed = JSON.parse(raw);
+      return {
+        fnbItems: Array.isArray(parsed?.fnbItems) ? parsed.fnbItems : [],
+        reservationDetails: parsed?.reservationDetails || null,
+      };
+    } catch (e) {
+      return { fnbItems: [], reservationDetails: null };
+    }
+  };
 
-  const filteredOrders = orders.filter((o) => {
+  const getWhatsAppLink = (order: any) => {
+    if (!order) return "#";
+    const rawWa = safeStr(order.whatsapp);
+    const cleanPhone = rawWa.replace(/[^0-9]/g, "");
+    const formattedPhone = cleanPhone.startsWith("0") ? `62${cleanPhone.slice(1)}` : cleanPhone;
+    const custName = safeStr(order.customer_name);
+    const orderCode = safeStr(order.order_code);
+    const text = encodeURIComponent(
+      `Halo Kak ${custName}, kami dari tim Cafetaria IDN Senopati mengenai pesanan Anda #${orderCode}.`
+    );
+    return `https://wa.me/${formattedPhone || "6287864081772"}?text=${text}`;
+  };
+
+  const pendingOrdersCount = (Array.isArray(orders) ? orders : []).filter(
+    (o) => o?.status === "menunggu_konfirmasi"
+  ).length;
+
+  const filteredOrders = (Array.isArray(orders) ? orders : []).filter((o) => {
+    if (!o) return false;
     const matchesFilter = orderFilter === "all" || o.status === orderFilter;
-    const matchesSearch =
-      o.order_code.toLowerCase().includes(orderSearch.toLowerCase()) ||
-      o.customer_name.toLowerCase().includes(orderSearch.toLowerCase()) ||
-      o.whatsapp.includes(orderSearch);
-    return matchesFilter && matchesSearch;
+    const s = safeStr(orderSearch).toLowerCase();
+    const codeMatch = safeStr(o.order_code).toLowerCase().includes(s);
+    const nameMatch = safeStr(o.customer_name).toLowerCase().includes(s);
+    const waMatch = safeStr(o.whatsapp).toLowerCase().includes(s);
+    return matchesFilter && (codeMatch || nameMatch || waMatch);
   });
 
   const filteredUsers = users.filter(
@@ -532,7 +572,7 @@ export default function DashboardPage() {
               </span>
             ) : (
               <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-surface-container-high text-on-surface font-mono">
-                {orders.length}
+                {(Array.isArray(orders) ? orders : []).length}
               </span>
             )}
           </button>
@@ -559,9 +599,9 @@ export default function DashboardPage() {
                   <span className="text-xs font-semibold uppercase tracking-wider">Total Pesanan</span>
                   <span className="material-symbols-outlined text-primary text-2xl">receipt_long</span>
                 </div>
-                <p className="text-3xl font-extrabold text-on-surface">{orders.length}</p>
+                <p className="text-3xl font-extrabold text-on-surface">{(Array.isArray(orders) ? orders : []).length}</p>
                 <p className="text-[11px] text-on-surface-variant">
-                  {orders.filter((o) => o.status === "dikonfirmasi" || o.status === "selesai").length} pesanan terkonfirmasi
+                  {(Array.isArray(orders) ? orders : []).filter((o) => o?.status === "dikonfirmasi" || o?.status === "selesai").length} pesanan terkonfirmasi
                 </p>
               </div>
 
@@ -1023,11 +1063,11 @@ export default function DashboardPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest p-4 rounded-2xl border border-outline-variant/40 shadow-xs">
               <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none text-xs">
                 {[
-                  { id: "all", label: "Semua", count: orders.length },
-                  { id: "menunggu_konfirmasi", label: "Menunggu Konfirmasi", count: orders.filter((o) => o.status === "menunggu_konfirmasi").length, alert: true },
-                  { id: "dikonfirmasi", label: "Dikonfirmasi", count: orders.filter((o) => o.status === "dikonfirmasi").length },
-                  { id: "selesai", label: "Selesai", count: orders.filter((o) => o.status === "selesai").length },
-                  { id: "ditolak", label: "Ditolak / Batal", count: orders.filter((o) => o.status === "ditolak").length },
+                  { id: "all", label: "Semua", count: (Array.isArray(orders) ? orders : []).length },
+                  { id: "menunggu_konfirmasi", label: "Menunggu Konfirmasi", count: (Array.isArray(orders) ? orders : []).filter((o) => o?.status === "menunggu_konfirmasi").length, alert: true },
+                  { id: "dikonfirmasi", label: "Dikonfirmasi", count: (Array.isArray(orders) ? orders : []).filter((o) => o?.status === "dikonfirmasi").length },
+                  { id: "selesai", label: "Selesai", count: (Array.isArray(orders) ? orders : []).filter((o) => o?.status === "selesai").length },
+                  { id: "ditolak", label: "Ditolak / Batal", count: (Array.isArray(orders) ? orders : []).filter((o) => o?.status === "ditolak").length },
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -1085,24 +1125,23 @@ export default function DashboardPage() {
                       </tr>
                     ) : (
                       filteredOrders.map((ord) => {
-                        let parsed: any = {};
-                        try { parsed = JSON.parse(ord.items_json); } catch(e) {}
-                        const fnbCount = Array.isArray(parsed.fnbItems) ? parsed.fnbItems.length : 0;
+                        if (!ord) return null;
+                        const parsed = parseOrderItems(ord.items_json);
+                        const fnbCount = parsed.fnbItems.length;
                         const hasRes = Boolean(parsed.reservationDetails);
+                        const orderStatus = ord.status || "menunggu_konfirmasi";
 
                         return (
                           <tr key={ord.id} className="hover:bg-surface-container/30 transition-colors">
                             <td className="py-3 px-4 font-mono">
-                              <span className="font-bold text-primary block">#{ord.order_code}</span>
+                              <span className="font-bold text-primary block">#{safeStr(ord.order_code)}</span>
                               <span className="text-[10px] text-outline">
-                                {new Date(ord.created_at).toLocaleDateString("id-ID", {
-                                  day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"
-                                })}
+                                {safeFormatOrderDate(ord.created_at)}
                               </span>
                             </td>
 
                             <td className="py-3 px-4">
-                              <span className="font-bold text-on-surface block">{ord.customer_name}</span>
+                              <span className="font-bold text-on-surface block">{safeStr(ord.customer_name)}</span>
                               <a
                                 href={getWhatsAppLink(ord)}
                                 target="_blank"
@@ -1110,13 +1149,13 @@ export default function DashboardPage() {
                                 className="inline-flex items-center gap-1 text-[11px] text-[#25D366] hover:underline font-semibold"
                               >
                                 <span className="material-symbols-outlined text-xs">chat</span>
-                                <span>{ord.whatsapp}</span>
+                                <span>{safeStr(ord.whatsapp)}</span>
                               </a>
                             </td>
 
                             <td className="py-3 px-4">
                               <span className="font-extrabold text-on-surface block">
-                                Rp {Number(ord.total_amount).toLocaleString("id-ID")}
+                                Rp {Number(ord.total_amount || 0).toLocaleString("id-ID")}
                               </span>
                               <span className="text-[10px] text-outline">
                                 {fnbCount > 0 ? `${fnbCount} item F&B` : ""}
@@ -1143,18 +1182,18 @@ export default function DashboardPage() {
 
                             <td className="py-3 px-4">
                               <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border ${
-                                ord.status === "menunggu_konfirmasi"
+                                orderStatus === "menunggu_konfirmasi"
                                   ? "bg-amber-50 text-amber-800 border-amber-300"
-                                  : ord.status === "dikonfirmasi"
+                                  : orderStatus === "dikonfirmasi"
                                   ? "bg-emerald-50 text-emerald-800 border-emerald-300"
-                                  : ord.status === "selesai"
+                                  : orderStatus === "selesai"
                                   ? "bg-blue-50 text-blue-800 border-blue-300"
                                   : "bg-red-50 text-red-800 border-red-300"
                               }`}>
                                 <span className="material-symbols-outlined text-xs">
-                                  {ord.status === "menunggu_konfirmasi" ? "hourglass_top" : ord.status === "dikonfirmasi" ? "check_circle" : ord.status === "selesai" ? "task_alt" : "cancel"}
+                                  {orderStatus === "menunggu_konfirmasi" ? "hourglass_top" : orderStatus === "dikonfirmasi" ? "check_circle" : orderStatus === "selesai" ? "task_alt" : "cancel"}
                                 </span>
-                                <span>{ord.status.replace(/_/g, " ")}</span>
+                                <span>{orderStatus.replace(/_/g, " ")}</span>
                               </span>
                             </td>
 
@@ -1522,17 +1561,10 @@ export default function DashboardPage() {
               <div>
                 <span className="text-xs font-mono text-outline">Detail Tiket Pesanan</span>
                 <h3 className="text-xl font-bold text-primary font-mono">
-                  #{selectedOrderDetail.order_code}
+                  #{safeStr(selectedOrderDetail.order_code)}
                 </h3>
                 <p className="text-xs text-on-surface-variant">
-                  {new Date(selectedOrderDetail.created_at).toLocaleDateString("id-ID", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {safeFormatOrderDate(selectedOrderDetail.created_at)}
                 </p>
               </div>
               <button
@@ -1548,7 +1580,7 @@ export default function DashboardPage() {
             <div className="grid grid-cols-2 gap-3 text-xs bg-surface p-4 rounded-2xl border border-outline-variant/40">
               <div>
                 <span className="text-[10px] text-outline uppercase font-semibold block">Nama Pemesan</span>
-                <span className="font-bold text-on-surface text-sm">{selectedOrderDetail.customer_name}</span>
+                <span className="font-bold text-on-surface text-sm">{safeStr(selectedOrderDetail.customer_name)}</span>
               </div>
               <div>
                 <span className="text-[10px] text-outline uppercase font-semibold block">WhatsApp</span>
@@ -1559,16 +1591,15 @@ export default function DashboardPage() {
                   className="font-bold text-[#25D366] hover:underline inline-flex items-center gap-1 text-sm"
                 >
                   <span className="material-symbols-outlined text-sm">chat</span>
-                  <span>{selectedOrderDetail.whatsapp}</span>
+                  <span>{safeStr(selectedOrderDetail.whatsapp)}</span>
                 </a>
               </div>
             </div>
 
             {/* Rincian Items */}
             {(() => {
-              let parsed: any = {};
-              try { parsed = JSON.parse(selectedOrderDetail.items_json); } catch(e) {}
-              const fnbList = Array.isArray(parsed.fnbItems) ? parsed.fnbItems : [];
+              const parsed = parseOrderItems(selectedOrderDetail.items_json);
+              const fnbList = parsed.fnbItems;
               const res = parsed.reservationDetails;
 
               return (
@@ -1582,11 +1613,11 @@ export default function DashboardPage() {
                         {fnbList.map((item: any, idx: number) => (
                           <div key={idx} className="py-2 flex justify-between items-center">
                             <div>
-                              <p className="font-semibold text-on-surface">{item.name}</p>
-                              <p className="text-[10px] text-outline">@ Rp {item.price.toLocaleString("id-ID")} x {item.quantity}</p>
+                              <p className="font-semibold text-on-surface">{safeStr(item.name)}</p>
+                              <p className="text-[10px] text-outline">@ Rp {Number(item.price || 0).toLocaleString("id-ID")} x {Number(item.quantity || 1)}</p>
                             </div>
                             <span className="font-bold text-on-surface">
-                              Rp {(item.price * item.quantity).toLocaleString("id-ID")}
+                              Rp {(Number(item.price || 0) * Number(item.quantity || 1)).toLocaleString("id-ID")}
                             </span>
                           </div>
                         ))}
@@ -1610,7 +1641,7 @@ export default function DashboardPage() {
                           </p>
                         )}
                         <p className="font-bold text-primary pt-1">
-                          Deposit Komitmen: Rp {Number(res.downPayment).toLocaleString("id-ID")}
+                          Deposit Komitmen: Rp {Number(res.downPayment || 0).toLocaleString("id-ID")}
                         </p>
                       </div>
                     </div>
@@ -1646,7 +1677,7 @@ export default function DashboardPage() {
               <div>
                 <span className="text-[11px] text-outline block">Total Tagihan QRIS:</span>
                 <span className="text-xl font-extrabold text-primary">
-                  Rp {Number(selectedOrderDetail.total_amount).toLocaleString("id-ID")}
+                  Rp {Number(selectedOrderDetail.total_amount || 0).toLocaleString("id-ID")}
                 </span>
               </div>
 

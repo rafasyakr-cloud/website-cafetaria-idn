@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { db, OrderRecord } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const session = await getCurrentUser();
@@ -10,12 +13,25 @@ export async function GET() {
     }
 
     const allOrders = await db.list<OrderRecord>("Orders");
-    allOrders.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    const safeOrders = Array.isArray(allOrders) ? allOrders.filter(Boolean) : [];
 
-    return NextResponse.json({
-      success: true,
-      orders: allOrders,
+    safeOrders.sort((a, b) => {
+      const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+      const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+      return (isNaN(timeB) ? 0 : timeB) - (isNaN(timeA) ? 0 : timeA);
     });
+
+    return NextResponse.json(
+      {
+        success: true,
+        orders: safeOrders,
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (err: any) {
     return NextResponse.json(
       { success: false, error: err.message || "Gagal mengambil daftar pesanan admin." },
@@ -23,4 +39,3 @@ export async function GET() {
     );
   }
 }
-
